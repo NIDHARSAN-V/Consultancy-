@@ -31,6 +31,8 @@ const SellerLayout = () => {
     return (
         <>
             <div className="flex items-center justify-between px-4 md:px-8 border-b border-gray-300 py-3 bg-white">
+
+                
                 <Link to='/'>
                      <div className="flex gap-1.5 items-center justify-center">
                             <img className="h-16" src={assets.box_icon} alt="logo" />
@@ -38,6 +40,8 @@ const SellerLayout = () => {
                     
                             </div>
                 </Link>
+
+
                 <div className="flex items-center gap-5 text-gray-500">
                     <p>Hi! Admin</p>
                     <button onClick={logout} className='border rounded-full text-sm px-4 py-1'>Logout</button>
