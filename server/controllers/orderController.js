@@ -19,16 +19,30 @@ export const placeOrderCOD = async (req, res) => {
     // Add Tax Charge (2%)
     amount += Math.floor(amount * 0.02);
 
-    await Order.create({
-      userId,
-      items,
-      amount,
-      address,
-      paymentType: "COD",
-    });
+    // await Order.create({
+    //   userId,
+    //   items,
+    //   amount,
+    //   address,
+    //   paymentType: "COD",
+    // });
+
+
+console.log(req.body)
+    // In both placeOrderCOD and placeOrderStripe functions:
+await Order.create({
+  userId,
+  items,
+  amount,
+  address,
+  paymentType: "COD", // or "Online"
+  status: "Placed", // Explicitly set initial status
+  isPaid: true // Set to true for online payments
+});
 
     return res.json({ success: true, message: "Order Placed Successfully" });
   } catch (error) {
+    console.log(error.message)
     return res.json({ success: false, message: error.message });
   }
 };
@@ -67,13 +81,25 @@ export const placeOrderStripe = async (req, res) => {
       });
     }
 
-    const order = await Order.create({
-      userId,
-      items,
-      amount,
-      address,
-      paymentType: "Online",
-    });
+    // const order = await Order.create({
+    //   userId,
+    //   items,
+    //   amount,
+    //   address,
+    //   paymentType: "Online",
+    // });
+
+
+    // In both placeOrderCOD and placeOrderStripe functions:
+await Order.create({
+  userId,
+  items,
+  amount,
+  address,
+  paymentType: "COD", // or "Online"
+  status: "Placed", // Explicitly set initial status
+  isPaid: false // Set to true for online payments
+});
 
     // Stripe Gateway Initialize
     const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
@@ -271,5 +297,50 @@ export const cancelOrderByUser = async (req, res) => {
     res.json({ success: true, message: "Order cancelled successfully", order });
   } catch (error) {
     res.json({ success: false, message: error.message });
+  }
+};
+
+
+
+
+
+// Update Order Status : /api/order/update-status/:orderId
+export const updateOrderStatus = async (req, res) => {
+  try {
+      const { orderId } = req.params;
+      const { status } = req.body;
+
+      const validStatuses = ["Placed", "Out for Delivery", "Delivered", "Cancelled"];
+      
+      if (!validStatuses.includes(status)) {
+          return res.status(400).json({
+              success: false,
+              message: "Invalid status value"
+          });
+      }
+
+      const order = await Order.findByIdAndUpdate(
+          orderId,
+          { status },
+          { new: true }
+      ).populate("items.product address");
+
+      if (!order) {
+          return res.status(404).json({
+              success: false,
+              message: "Order not found"
+          });
+      }
+
+      res.json({
+          success: true,
+          message: "Order status updated successfully",
+          order
+      });
+  } catch (error) {
+      res.status(500).json({
+          success: false,
+          message: error.message
+      });
   }
 };
