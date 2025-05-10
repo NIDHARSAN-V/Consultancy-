@@ -9,10 +9,10 @@ const SellerLayout = () => {
 
 
     const sidebarLinks = [
+        { name: "Analytics", path: "/seller/analytics", icon: assets.order_icon },
         { name: "Add Product", path: "/seller", icon: assets.add_icon },
         { name: "Product List", path: "/seller/product-list", icon: assets.product_list_icon },
-        { name: "Orders", path: "/seller/orders", icon: assets.order_icon },
-        { name: "Analytics", path: "/seller/analytics", icon: assets.order_icon }
+        { name: "Orders", path: "/seller/orders", icon: assets.order_icon }
     ];
 
     const logout = async ()=>{

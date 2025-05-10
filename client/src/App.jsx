@@ -19,6 +19,7 @@ import ProductList from './pages/seller/ProductList';
 import Orders from './pages/seller/Orders';
 import Loading from './components/Loading';
 import SellerAnalytics from './pages/seller/SellerAnalytics';
+import Contact from './pages/Contacts';
 
 const App = () => {
 
@@ -41,6 +42,7 @@ const App = () => {
           <Route path='/products/:category/:id' element={<ProductDetails/>} />
           <Route path='/cart' element={<Cart/>} />
           <Route path='/add-address' element={<AddAddress/>} />
+          <Route path='/contact' element={<Contact/>} />
           <Route path='/my-orders' element={<MyOrders/>} />
           <Route path='/loader' element={<Loading/>} />
           <Route path='/seller' element={isSeller ? <SellerLayout/> : <SellerLogin/>}>

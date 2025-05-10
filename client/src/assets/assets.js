@@ -103,7 +103,7 @@ export const assets = {
 
 export const categories = [
   {
-    text: "Organic veggies",
+    text: "Veggies",
     path: "Vegetables",
     image: organic_vegitable_image,
     bgColor: "#FEF6DA",
@@ -145,6 +145,32 @@ export const categories = [
     bgColor: "#F1E3F9",
   },
 ];
+
+
+// // Get dynamic categories from localStorage or initialize empty array
+// const getDynamicCategories = () => {
+//   if (typeof window !== 'undefined') {
+//     return JSON.parse(localStorage.getItem('dynamicCategories')) || [];
+//   }
+//   return [];
+// };
+
+// // Combined categories export
+// export const categories = [...staticCategories, ...getDynamicCategories()];
+
+// // Function to add new category
+// export const addNewCategory = (newCategory) => {
+//   const dynamicCategories = getDynamicCategories();
+  
+//   // Check if category already exists
+//   if (dynamicCategories.some(cat => cat.path === newCategory.path)) {
+//     throw new Error('Category already exists');
+//   }
+  
+//   const updatedCategories = [...dynamicCategories, newCategory];
+//   localStorage.setItem('dynamicCategories', JSON.stringify(updatedCategories));
+//   return updatedCategories;
+// };
 
 export const footerLinks = [
   {
